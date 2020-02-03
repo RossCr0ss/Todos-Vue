@@ -1,23 +1,25 @@
 <template>
   <div id="app" class="container">
-    <img alt="Vue logo" :src="logoImage" class="logo">
-    <todo-list></todo-list>
+    <img alt="Logo" :src="logoImage" class="logo">
+    <router-view></router-view>
+    <!-- <login></login> -->
+    <!-- <todo-list></todo-list> -->
   </div>
 </template>
 
 <script>
 import TodoList from './components/TodoList.vue'
 import logoImage from './assets/todo-list.png'
-import LoginPage from './components/LoginPage'
+import Login from './components/Login'
+
 
 
 export default {
 
   name: 'app',
   components: {
-    
     TodoList,
-    LoginPage
+    Login
   },
   data() {
     return {
