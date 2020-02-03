@@ -28,10 +28,19 @@
           placeholder="Enter password"
         />
       </div>
-
+  <br>
+      <div class="form-group">
+        <select v-model="selected">
+          <option disabled value>Choose one of the options</option>
+          <option>Manager</option>
+          <option>User</option>
+        </select>
+        <span>Choose: {{ selected }}</span>
+      </div>
+<br>
       <button class="todo-btn-add submit" v-on:click="addUser($event)">AddUser</button>
-      </form>
-    <br>
+    </form>
+    <br />
 
     <form class="flex-col" @submit.prevent="deleteUser" id="deleteUser">
       <div class="form-group">
@@ -47,46 +56,42 @@
       </div>
 
       <button class="todo-btn-add submit" v-on:click="deleteUser($event)">deleteUser</button>
-
-  
     </form>
 
     <div class="todo-list">
-    <h2>Todo List</h2>
-    <div class="flex-between w-40">
-      <input
-        type="text"
-        class="todo-input"
-        placeholder="What are you needs to be done?"
-        v-model="newTodo"
-        @keyup.enter="addTodo"
-      />
-      <button class="todo-btn-add" @click="addTodo">Add Todo</button>
-    </div>
-
-    <div v-for="(todo, index) in todos" :key="todo.id" class="todo-item">
-      {{ todo.title }}
-      <div class="flex-between">
-        <button class="todo-item-btn todo-item-btn-delete" @click="removeItem(index)">&times;</button>
-        <button class="todo-item-btn todo-item-btn-complete" @click="completeTask(index)">&#10004;</button>
+      <h2>Todo List</h2>
+      <div class="flex-between w-40">
+        <input
+          type="text"
+          class="todo-input"
+          placeholder="What are you needs to be done?"
+          v-model="newTodo"
+          @keyup.enter="addTodo"
+        />
+        <button class="todo-btn-add" @click="addTodo">Add Todo</button>
       </div>
-    </div>
 
-    <div class="flex-between todosCompleted">
-      <h2>Completed tasks</h2>
-      <div v-for="(todo, index) in todosCompleted" :key="todo.id" class="todo-item-completed">
+      <div v-for="(todo, index) in todos" :key="todo.id" class="todo-item">
         {{ todo.title }}
         <div class="flex-between">
-          <button
-            class="todo-item-btn todo-item-btn-delete"
-            @click="removeCompleteItem(index)"
-          >&times;</button>
+          <button class="todo-item-btn todo-item-btn-delete" @click="removeItem(index)">&times;</button>
+          <button class="todo-item-btn todo-item-btn-complete" @click="completeTask(index)">&#10004;</button>
+        </div>
+      </div>
+
+      <div class="flex-between todosCompleted">
+        <h2>Completed tasks</h2>
+        <div v-for="(todo, index) in todosCompleted" :key="todo.id" class="todo-item-completed">
+          {{ todo.title }}
+          <div class="flex-between">
+            <button
+              class="todo-item-btn todo-item-btn-delete"
+              @click="removeCompleteItem(index)"
+            >&times;</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
-
   </div>
 </template>
 
@@ -97,6 +102,7 @@ export default {
   name: "Admin",
   data() {
     return {
+      selected: '',
       input: {
         username: "",
         password: ""
@@ -119,7 +125,6 @@ export default {
       ],
       todosCompleted: []
     };
-
   },
   computed: {
     isEmptyNewTodo() {
@@ -130,22 +135,20 @@ export default {
     addUser(event) {
       let username = event.target.elements.username.value;
       let password = event.target.elements.password.value;
-      let manager = {username, password};
-      /* this.manager.push({ manager }); */
-
-        /* localStorage.manager = JSON.stringify(); */
-
+      
+      let manager = { username, password};
+      /* console.log(event); */
+      
       let managerJSON = JSON.stringify(username, password);
-      console.log(managerJSON)
+      console.log(managerJSON);
       localStorage.setItem(username, password);
       event.target.reset();
     },
 
-
     deleteUser(event) {
-        let user = event.target.elements.user.value;
-        console.log(user)
-        localStorage.removeItem(user);
+      let user = event.target.elements.user.value;
+      console.log(user);
+      localStorage.removeItem(user);
     },
 
     addTodo() {
@@ -177,7 +180,7 @@ export default {
     },
 
     logOut() {
-     this.$router.push("/");
+      this.$router.push("/");
     }
   }
 };
