@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    
     <h2>Login</h2>
 
     <form class="flex-col" @submit.prevent="login" id="login">
@@ -29,12 +30,19 @@
 
       <button class="todo-btn-add submit" v-on:click="login($event)">Login</button>
     </form>
+
+
+
+
+
   </div>
 </template>
 
 
 
 <script>
+
+
 export default {
   name: 'Login',
   data() {
@@ -51,10 +59,11 @@ export default {
   },
   methods: {
     login(event) {
-      console.log(event.target.elements.username.value, event.target.elements.password.value);
-      console.log(this.admin.username, this.admin.password)
+
       if (event.target.elements.username.value == this.admin.username && event.target.elements.password.value == this.admin.password) {
-        alert('Hello Admin')
+
+        this.$router.push('/admin');
+
       } else {
         alert('Invalid data!')
       }
